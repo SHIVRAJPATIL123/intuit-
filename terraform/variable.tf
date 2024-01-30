@@ -13,12 +13,3 @@ variable "cluster_region" {
 variable "node_size" {
   default = "s-2vcpu-2gb"
 }
-
-variable "clusters" {
- type = map(object({
-    cluster_name = optional(any)
-    cluster_region = optional(any)
-    cluster_version = optional(any)
-    node_size  = optional(any)
-}))
-}

@@ -16,17 +16,25 @@ provider "digitalocean" {
   token = var.do_token
 }
 
-
-
-
-resource "digitalocean_kubernetes_cluster" "clusters" {
-  for_each = var.clusters
-  name    = ${join(",", each.value.cluster_name)}"
-  region  = ${join(",", each.value.cluster_region)}"
-  version = ${join(",", each.value.cluster_version)}"
+# Create a DigitalOcean Kubernetes cluster
+resource "digitalocean_kubernetes_cluster" "cluster1" {
+  name    = var.cluster1_name
+  region  = var.cluster_region
+  version = var.cluster_version  
   node_pool {
     name       = "pool-default"
-    size       = ${join(",", each.value.node_size)}"
+    size       = var.node_size
+    node_count = 1
+  }
+}
+
+resource "digitalocean_kubernetes_cluster" "cluster2" {
+  name    = var.cluster2_name
+  region  = var.cluster_region
+  version = var.cluster_version 
+  node_pool {
+    name       = "pool-default"
+    size       = var.node_size
     node_count = 1
   }
 }
