@@ -32,11 +32,11 @@ jobs:
       - name: test cluster1
         run: kubectl get all
       - name: warmup-cluster1
-        run: sleep 120
+        run: sleep 60
       - name: deploy rediscluster in cluster 1
         run: cd terraform/helm/redis-cluster1/ && terraform init && terraform apply -auto-approve 
       - name: warmup-redis
-        run: sleep 120
+        run: sleep 30
       - name: testing redis cluster1
         run:  kubectl exec -it redis-redis-cluster-0 -- redis-cli auth `kubectl get secret redis-redis-cluster  -o jsonpath='{.data.redis-password}' | base64 --decode`
       - name: destroy redis cluster1
@@ -48,7 +48,7 @@ jobs:
       - name: deploy rediscluster in cluster 2
         run: cd terraform/helm/redis-cluster2/ && terraform init && terraform apply -auto-approve 
       - name: warmup-redis
-        run: sleep 120
+        run: sleep 30
       - name: testing redis cluster2
         run:  kubectl exec -it redis-redis-cluster-0 -- redis-cli auth `kubectl get secret redis-redis-cluster  -o jsonpath='{.data.redis-password}' | base64 --decode`
       - name: destroy redis cluster2
