@@ -13,7 +13,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  CURD:
+  CURD-cluster2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_TOKEN }}
+  CURD-cluster1:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
