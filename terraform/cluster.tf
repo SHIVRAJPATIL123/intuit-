@@ -7,7 +7,6 @@ terraform {
   }
 }
 
-
 variable "do_token" {
   sensitive = true
 }
@@ -16,22 +15,25 @@ provider "digitalocean" {
   token = var.do_token
 }
 
-# Create a DigitalOcean Kubernetes cluster
-resource "digitalocean_kubernetes_cluster" "cluster1" {
-  name    = var.cluster1_name
-  region  = var.cluster_region
-  version = var.cluster_version  
-  node_pool {
-    name       = "pool-default"
-    size       = var.node_size
-    node_count = 1
+# Create DigitalOcean Kubernetes clusters
+variable "clusters" {
+  default = {
+    "cluster1" = {
+      name    = var.cluster1_name
+    },
+    "cluster2" = {
+      name    = var.cluster2_name
+    }
   }
 }
 
-resource "digitalocean_kubernetes_cluster" "cluster2" {
-  name    = var.cluster2_name
+resource "digitalocean_kubernetes_cluster" "clusters" {
+  for_each = var.clusters
+
+  name    = each.value.name
   region  = var.cluster_region
-  version = var.cluster_version 
+  version = var.cluster_version
+  
   node_pool {
     name       = "pool-default"
     size       = var.node_size
