@@ -39,8 +39,8 @@ jobs:
         run: sleep 30
       - name: testing redis cluster1
         run:  kubectl exec -it redis-redis-cluster-0 -- redis-cli auth `kubectl get secret redis-redis-cluster  -o jsonpath='{.data.redis-password}' | base64 --decode`
-      - name: destroy redis cluster1
-        run: cd terraform/helm/redis-cluster1/ && terraform destroy -auto-approve 
+      # - name: destroy redis cluster1
+      #   run: cd terraform/helm/redis-cluster1/ && terraform destroy -auto-approve 
       - name: auth cluster2
         run: doctl kubernetes cluster kubeconfig save second
       - name: test cluster2
@@ -51,12 +51,12 @@ jobs:
         run: sleep 30
       - name: testing redis cluster2
         run:  kubectl exec -it redis-redis-cluster-0 -- redis-cli auth `kubectl get secret redis-redis-cluster  -o jsonpath='{.data.redis-password}' | base64 --decode`
-      - name: destroy redis cluster2
-        run: cd terraform/helm/redis-cluster1/ && terraform destroy -auto-approve 
-      - name: terraform destroy
-        run: cd terraform && terraform destroy -auto-approve -var "do_token=${{ secrets.DO_TOKEN }} " 
-      - name: cleanup
-        run: doctl compute volume list --format ID --no-header | xargs -I {} doctl compute volume delete -f {} ||true
+      # - name: destroy redis cluster2
+      #   run: cd terraform/helm/redis-cluster2/ && terraform destroy -auto-approve 
+      # - name: terraform destroy
+      #   run: cd terraform && terraform destroy -auto-approve -var "do_token=${{ secrets.DO_TOKEN }} " 
+      # - name: cleanup
+      #   run: doctl compute volume list --format ID --no-header | xargs -I {} doctl compute volume delete -f {} ||true
 
 
 
