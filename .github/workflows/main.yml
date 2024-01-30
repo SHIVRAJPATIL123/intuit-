@@ -31,6 +31,8 @@ jobs:
         run: doctl kubernetes cluster kubeconfig save first
       - name: test cluster1
         run: kubectl get all
+      - name: warmup
+        run: sleep 30
       - name: deploy rediscluster in cluster 1
         run: cd terraform/helm/redis-cluster1/ && terraform init && terraform apply -auto-approve
       - name: testing redis cluster1
