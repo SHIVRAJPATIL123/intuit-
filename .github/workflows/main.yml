@@ -59,6 +59,8 @@ jobs:
         run: kubectl exec -it redis-master-0 -- redis-cli auth `kubectl get secret redis  -o jsonpath='{.data.redis-password}' | base64 --decode`
       - name: terraform destroy
         run: cd terraform && terraform destroy -auto-approve -var "do_token=${{ secrets.DO_TOKEN }} " 
+      - name: cleanup
+        run: doctl compute volume list --format ID --no-header | xargs -I {} doctl compute volume delete {} ||true
 
 
 
