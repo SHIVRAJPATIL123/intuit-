@@ -7,8 +7,8 @@ provider "helm" {
 # Install Redis Helm chart
 resource "helm_release" "redis" {
   name       = "redis"
-  repository = "oci://registry-1.docker.io/bitnamicharts/"
-  chart      = "redis"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "redis-cluster"
 
   set {
     name  = "cluster.enabled"
