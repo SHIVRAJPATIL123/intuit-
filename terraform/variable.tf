@@ -21,5 +21,4 @@ variable "clusters" {
     cluster_version = optional(any)
     node_size  = optional(any)
 }))
-default = {}
 }

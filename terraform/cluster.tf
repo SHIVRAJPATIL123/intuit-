@@ -21,12 +21,12 @@ provider "digitalocean" {
 
 resource "digitalocean_kubernetes_cluster" "clusters" {
   for_each = var.clusters
-  name    = each.value.cluster_name
-  region  = each.value.cluster_region
-  version = each.value.cluster_version 
+  name    = ${join(",", each.value.cluster_name)}"
+  region  = ${join(",", each.value.cluster_region)}"
+  version = ${join(",", each.value.cluster_version)}"
   node_pool {
     name       = "pool-default"
-    size       = each.value.node_size
+    size       = ${join(",", each.value.node_size)}"
     node_count = 1
   }
 }
